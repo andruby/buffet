@@ -16,12 +16,13 @@ client.set_token(token_data["access"])
 # institutions = client.institution.get_institutions("BE")
 
 kbc_id = "KBC_KREDBEBB"
+degiro_id = "FLATEXDEGIRO_BIWBDE33"
 
-ref = "rfds422"
+ref = "rfds422-1"
 init = client.init_session(
   # redirect url after successful authentication
   redirect_url: "http://andrewsblog.org",
-  institution_id: kbc_id,
+  institution_id: degiro_id,
   # a unique user ID of someone who's using your services, usually it's a UUID
   reference_id: ref,
 )
@@ -29,4 +30,4 @@ init = client.init_session(
 link = init["link"] # bank authorization link
 puts "link: #{link.inspect}"
 requisition_id = init["id"]
-puts "requisition_id: #{requisition_id.inspect}" 
+puts "requisition_id: #{requisition_id.inspect}"

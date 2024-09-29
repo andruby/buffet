@@ -1,6 +1,5 @@
 require "bundler"
 Bundler.require
-
 Dotenv.load
 
 @gc_client = GoCardlessPro::Client.new(
