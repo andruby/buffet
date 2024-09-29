@@ -7,6 +7,12 @@ require 'erb'
 require 'securerandom'
 require "sinatra/cookies"
 
+PROMPT = <<~EOP
+You are a financial advisor.
+You are give a list of recent transactions of a person in JSON format.
+What can you say about this persons expenses and budgetting?
+EOP
+
 get '/' do
   erb :index
 end
@@ -44,11 +50,25 @@ get '/accounts' do
   erb :accounts
 end
 
-get '/account' do
+get '/account/:account_id' do
+  content_type "text/vnd.turbo-stream.html"
   @account_id = params[:account_id]
-  erb :account
-  # todo: fetch last 30d transactions
-  # todo: ask Claude Sonet to give advice
+  puts "account_id: #{params[:account_id]}"
+  erb(:account)
+end
+
+get '/account/:account_id/advice' do
+  # raw_txs = nordigen_client.account(account_id).get_transactions()
+  # txs = raw_txs["transactions"]["booked"].map { |x| x.except("transactionId","internalTransactionId","proprietaryBankTransactionCode") }
+  txs = JSON.parse(File.read("txs.json"))
+  content_type "text/event-stream"
+
+  stream do |out|
+    ask_claude(PROMPT, txs[0..20].to_json) do |_full, delta|
+      out << "data: #{delta}\n\n"
+    end
+    out << "event: close\ndata: close\n\n"
+  end
 end
 
 get '/after_requisition' do
@@ -73,4 +93,17 @@ end
 
 def anthropic_client
   Anthropic::Client.new(access_token: ENV.fetch("ANTHROPIC_API_KEY"))
+end
+
+def ask_claude(system, message, &block)
+  puts "asking claude"
+  anthropic_client.messages(
+    parameters: {
+      model: "claude-3-5-sonnet-20240620",
+      system: system,
+      messages: [{"role": "user", "content": message}],
+      max_tokens: 1000,
+      stream: block,
+      preprocess_stream: :text
+    })
 end

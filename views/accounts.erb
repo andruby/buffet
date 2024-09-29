@@ -2,9 +2,10 @@
   <h1> We have <%= @accounts.count %> accounts</h1>
   <p>Which one would you like advice for?</p>
   <% @accounts.each do |account| %>
-    <a class="button" href="/account?account_id=<%= account[:id] %>" data-turbo-prefetch="false">
+    <a class="button" href="/account/<%= account[:id] %>" data-turbo-stream="true">
       <%= account[:id] %>
       <%= account[:iban] %> <%= account[:balance] %> <%= account[:currency] %>
     </a>
   <% end %>
+  <div id="account"></div>
 </turbo-frame>

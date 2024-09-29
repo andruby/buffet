@@ -15,3 +15,7 @@ gem "nordigen-ruby", "~> 2.2.0"
 gem "sinatra", "~> 4.0.0"
 gem "sinatra-contrib", "~> 4.0.0"
 gem "rackup", "~> 2.1.0"
+gem "puma", "~> 6.4.0"
+
+# LLM AI
+gem "anthropic"
