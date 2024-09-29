@@ -2,10 +2,15 @@
 
 source "https://rubygems.org"
 
-gem "dotenv"
+# env vars
+gem "dotenv", "~> 3.1.0"
 
 # Used for payments
-gem "gocardless_pro", '~> 3.0.0'
+gem "gocardless_pro", "~> 3.0.0"
 
 # Used for open banking dating
-gem "nordigen-ruby", '~> 2.2.0'
+gem "nordigen-ruby", "~> 2.2.0"
+
+# http server
+gem "sinatra", "~> 4.0.0"
+gem "rackup"

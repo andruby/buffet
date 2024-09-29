@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    base64 (0.2.0)
     dotenv (3.1.4)
     faraday (2.12.0)
       faraday-net_http (>= 2.0, < 3.4)
@@ -12,20 +13,42 @@ GEM
       faraday (>= 2, < 3)
     json (2.7.2)
     logger (1.6.1)
+    mustermann (3.0.3)
+      ruby2_keywords (~> 0.0.1)
     net-http (0.4.1)
       uri
     nordigen-ruby (2.2.0)
       faraday (~> 2.5)
+    rack (3.1.7)
+    rack-protection (4.0.0)
+      base64 (>= 0.1.0)
+      rack (>= 3.0.0, < 4)
+    rack-session (2.0.0)
+      rack (>= 3.0.0)
+    rackup (2.1.0)
+      rack (>= 3)
+      webrick (~> 1.8)
+    ruby2_keywords (0.0.5)
+    sinatra (4.0.0)
+      mustermann (~> 3.0)
+      rack (>= 3.0.0, < 4)
+      rack-protection (= 4.0.0)
+      rack-session (>= 2.0.0, < 3)
+      tilt (~> 2.0)
+    tilt (2.4.0)
     uri (0.13.1)
+    webrick (1.8.2)
 
 PLATFORMS
   arm64-darwin-23
   ruby
 
 DEPENDENCIES
-  dotenv
+  dotenv (~> 3.1.0)
   gocardless_pro (~> 3.0.0)
   nordigen-ruby (~> 2.2.0)
+  rackup
+  sinatra (~> 4.0.0)
 
 BUNDLED WITH
    2.5.17

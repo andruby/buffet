@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
+  <script type="module">
+    import * as Turbo from 'https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.10/+esm';
+  </script>
+  <style>
+    .turbo-progress-bar {
+      height: 10px;
+      background-color: green;
+    }
+  </style>
+  <title>Wireframe - Contact</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/contact">Contact</a>
+      <a href="/about">About</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Pick your bank</h1>
+    <turbo-frame id="institutions" src="/institutions">
+      loading...
+    </turbo-frame>
+  </main>
+</body>
+</html>
