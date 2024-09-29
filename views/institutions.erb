@@ -1,7 +1,8 @@
 <turbo-frame id="institutions">
-  <select>
+  <select name="institution_id">
     <% @institutions.each do |institution| %>
       <option value="<%= institution["id"]%>"><%= institution["name"] %></option>
     <% end %>
   </select>
+  <input type="submit" value="Get access" />
 </turbo-frame>

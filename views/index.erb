@@ -17,18 +17,19 @@
   <title>Wireframe - Contact</title>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="/">Home</a>
-      <a href="/contact">Contact</a>
-      <a href="/about">About</a>
-    </nav>
-  </header>
   <main>
-    <h1>Pick your bank</h1>
-    <turbo-frame id="institutions" src="/institutions">
-      loading...
-    </turbo-frame>
+    <% unless cookies[:requisition_id] %>
+      <h1>Pick your bank</h1>
+      <form action="/init_requisition" method="post" data-turbo="false">
+        <turbo-frame id="institutions" src="/institutions">
+          loading financial institutions...
+        </turbo-frame>
+      </form>
+    <% else %>
+      <turbo-frame id="accounts" src="/accounts">
+        loading account data...
+      </turbo-frame>
+    <% end %>
   </main>
 </body>
 </html>

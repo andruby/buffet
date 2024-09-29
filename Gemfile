@@ -13,4 +13,5 @@ gem "nordigen-ruby", "~> 2.2.0"
 
 # http server
 gem "sinatra", "~> 4.0.0"
-gem "rackup"
+gem "sinatra-contrib", "~> 4.0.0"
+gem "rackup", "~> 2.1.0"

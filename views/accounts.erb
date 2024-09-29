@@ -1,0 +1,10 @@
+<turbo-frame id="accounts">
+  <h1> We have <%= @accounts.count %> accounts</h1>
+  <p>Which one would you like advice for?</p>
+  <% @accounts.each do |account| %>
+    <a class="button" href="/account?account_id=<%= account[:id] %>" data-turbo-prefetch="false">
+      <%= account[:id] %>
+      <%= account[:iban] %> <%= account[:balance] %> <%= account[:currency] %>
+    </a>
+  <% end %>
+</turbo-frame>
