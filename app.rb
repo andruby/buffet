@@ -7,6 +7,8 @@ require 'erb'
 require 'securerandom'
 require "sinatra/cookies"
 
+set :bind, '0.0.0.0'
+
 CLAUDE_MODEL = "claude-3-5-sonnet-20240620" # "claude-3-haiku-20240307" (cheaper) or "claude-3-5-sonnet-20240620" (better)
 MAX_TOKENS = 1000
 PROMPT = <<~EOP
@@ -30,7 +32,7 @@ post '/init_requisition' do
   ref = SecureRandom.uuid # unique reference
   init = nordigen_client.init_session(
     # redirect url after successful authentication
-    redirect_url: "http://127.0.0.1:4567/after_requisition",
+    redirect_url: "http://#{request.env["SERVER_NAME"]}:4567/after_requisition",
     institution_id: params[:institution_id],
     reference_id: ref,
   )
@@ -49,6 +51,11 @@ get '/accounts' do
       # currency: details["currency"],
       # balance: balances&.first&.dig("balanceAmount", "acount")
     }
+  end
+
+  if @accounts.count == 0
+    # clear cookies
+    cookies.keep_if { false }
   end
 
   erb :accounts
