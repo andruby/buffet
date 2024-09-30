@@ -4,12 +4,14 @@
     <p id="advice"></p>
     <script>
       const evtSource = new EventSource("account/<%= @account_id %>/advice")
+      let response = ""
       const targetDiv = document.getElementById("advice");
       evtSource.addEventListener("close", (event) => {
         evtSource.close()
       });
       evtSource.onmessage = (event) => {
-        targetDiv.append(event.data);
+        response = response.concat(event.data)
+        targetDiv.innerHTML = marked.parse(response);
       };
     </script>
   </template>
