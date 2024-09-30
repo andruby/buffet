@@ -9,7 +9,7 @@ require "sinatra/cookies"
 
 set :bind, '0.0.0.0'
 
-CLAUDE_MODEL = "claude-3-5-sonnet-20240620" # "claude-3-haiku-20240307" (cheaper) or "claude-3-5-sonnet-20240620" (better)
+CLAUDE_MODEL = "claude-3-5-sonnet-20240620" # "claude-3-haiku-20240307" (cheaper <$0.005) or "claude-3-5-sonnet-20240620" (better, $0.02)
 MAX_TOKENS = 1000
 PROMPT = <<~EOP
 You are a financial advisor.
@@ -54,7 +54,7 @@ get '/accounts' do
   end
 
   if @accounts.count == 0
-    # clear cookies
+    # clear cookies if we failed to get accounts
     cookies.keep_if { false }
   end
 
@@ -64,14 +64,13 @@ end
 get '/account/:account_id' do
   content_type "text/vnd.turbo-stream.html"
   @account_id = params[:account_id]
-  puts "account_id: #{params[:account_id]}"
   erb(:account)
 end
 
 get '/account/:account_id/advice' do
-  # raw_txs = nordigen_client.account(account_id).get_transactions()
-  # txs = raw_txs["transactions"]["booked"].map { |x| x.except("transactionId","internalTransactionId","proprietaryBankTransactionCode") }
-  txs = JSON.parse(File.read("txs.json"))
+  raw_txs = nordigen_client.account(params[:account_id]).get_transactions()
+  txs = raw_txs["transactions"]["booked"].map { |x| x.except("transactionId","internalTransactionId","proprietaryBankTransactionCode") }
+  # txs = JSON.parse(File.read("txs.json"))
   content_type "text/event-stream"
 
   id = 1
