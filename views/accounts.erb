@@ -3,8 +3,11 @@
   <p>Which one would you like advice for?</p>
   <% @accounts.each do |account| %>
     <a class="button" href="/account/<%= account[:id] %>" data-turbo-stream="true">
-      <%= account[:id] %>
-      <%= account[:iban] %> <%= account[:balance] %> <%= account[:currency] %>
+      <% if account[:iban] %>
+        <%= account[:iban] %> <%= account[:balance] %> <%= account[:currency] %>
+      <% else %>
+        <%= account[:id] %>
+      <% end %>
     </a>
   <% end %>
   <div id="account"></div>
