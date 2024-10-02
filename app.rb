@@ -9,7 +9,7 @@ require "sinatra/cookies"
 
 set :bind, '0.0.0.0'
 
-CLAUDE_MODEL = "claude-3-5-sonnet-20240620" # "claude-3-haiku-20240307" (cheaper <$0.005) or "claude-3-5-sonnet-20240620" (better, $0.02)
+CLAUDE_MODEL = "claude-3-5-sonnet-20240620" # "claude-3-haiku-20240307" (cheaper $0.002) or "claude-3-5-sonnet-20240620" (better, $0.02)
 MAX_TOKENS = 1000
 PROMPT = <<~EOP
 You are a financial advisor.
