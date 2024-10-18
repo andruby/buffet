@@ -86,6 +86,11 @@ get '/after_requisition' do
   redirect to('/')
 end
 
+get '/delete_session' do
+  cookies.keep_if { false }
+  redirect to('/')
+end
+
 def get_accounts(req_id)
   client = nordigen_client
   requisition_data = client.requisition.get_requisition_by_id(req_id)
